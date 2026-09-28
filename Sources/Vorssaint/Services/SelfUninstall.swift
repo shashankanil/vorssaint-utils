@@ -176,6 +176,7 @@ enum SelfUninstall {
         CameraPreviewService.shared.suspend()
         RadialMenuService.shared.suspend()
         ScratchpadService.shared.suspend()
+        OpenScribeService.shared.suspend()
         CommandBarService.shared.suspend()
         PreciseVolumeRollerService.shared.suspend()
         // Leaving the mic cut after the app is gone would strand the user
@@ -250,6 +251,8 @@ enum SelfUninstall {
     private static func removePreferences() {
         let id = bundleID
         UserDefaults.standard.removePersistentDomain(forName: id)
+        // OpenScribe's API keys are the only keychain items the app creates.
+        OpenScribeKeychain.removeAll()
         let home = NSHomeDirectory()
         try? FileManager.default.removeItem(atPath: "\(home)/Library/Preferences/\(id).plist")
         try? FileManager.default.removeItem(atPath: "\(home)/Library/Saved Application State/\(id).savedState")

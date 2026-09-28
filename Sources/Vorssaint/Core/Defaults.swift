@@ -691,6 +691,19 @@ enum DefaultsKey {
     static let recorderSharingEnabled = "recorderSharingEnabled"
     static let panelUtilityScreenRecorder = "panelUtilityScreenRecorder"
     static let panelUtilityPortManager = "panelUtilityPortManager"
+    static let panelUtilityOpenScribe = "panelUtilityOpenScribe"
+
+    // OpenScribe — dictation through the model endpoints the user adds. The
+    // endpoint list holds addresses and model names only; API keys live in
+    // the keychain under each endpoint's id and never enter preferences.
+    static let openScribeShortcutEnabled = "openScribeShortcutEnabled"
+    static let openScribeShortcut = "openScribeShortcut"
+    static let openScribeEndpoints = "openScribeEndpoints"
+    static let openScribeTranscriptionEndpoint = "openScribeTranscriptionEndpoint" // endpoint UUID
+    static let openScribeCleanupEndpoint = "openScribeCleanupEndpoint"             // endpoint UUID, empty = off
+    static let openScribeDelivery = "openScribeDelivery"                           // paste | copy
+    static let openScribeLanguage = "openScribeLanguage"                           // ISO 639-1, empty = detect
+    static let openScribeVocabulary = "openScribeVocabulary"
 
     // Window Layout — snapping, global shortcuts and optional pointer gestures.
     static let windowLayoutShortcutsEnabled = "windowLayoutShortcutsEnabled"
@@ -1671,6 +1684,15 @@ enum Defaults {
         DefaultsKey.recorderSharingEnabled: true,
         DefaultsKey.panelUtilityScreenRecorder: true,
         DefaultsKey.panelUtilityPortManager: true,
+        DefaultsKey.panelUtilityOpenScribe: true,
+        DefaultsKey.openScribeShortcutEnabled: true,
+        DefaultsKey.openScribeShortcut: GlobalShortcut.openScribeDefault.storageValue,
+        DefaultsKey.openScribeEndpoints: Data(),
+        DefaultsKey.openScribeTranscriptionEndpoint: "",
+        DefaultsKey.openScribeCleanupEndpoint: "",
+        DefaultsKey.openScribeDelivery: OpenScribeDelivery.paste.rawValue,
+        DefaultsKey.openScribeLanguage: "",
+        DefaultsKey.openScribeVocabulary: "",
         DefaultsKey.screenshotShowCaptureMenuOnShortcut: true,
         DefaultsKey.recorderShowCaptureMenuOnShortcut: true,
         DefaultsKey.screenOCRShowCaptureMenuOnShortcut: true,

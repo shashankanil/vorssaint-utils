@@ -542,7 +542,7 @@ private enum UtilityPanelItem: String, PanelOrderItem, Identifiable {
     // are migrated once without disturbing the rest of the user's layout.
     case screenshot, quickLauncher, appUpdates, cleaner, homebrew, media, clipboard, windowLayout,
          uninstaller, cleanURL, cleaning, screenOCR, colorPicker, cameraPreview, scratchpad,
-         commandBar, screenRecorder, portManager
+         commandBar, screenRecorder, portManager, openScribe
 
     var id: String { rawValue }
 
@@ -568,6 +568,7 @@ private enum UtilityPanelItem: String, PanelOrderItem, Identifiable {
         case .scratchpad: return .scratchpad
         case .commandBar: return .commandBar
         case .portManager: return .portManager
+        case .openScribe: return .openScribe
         }
     }
 }
@@ -604,6 +605,8 @@ struct UtilitiesSection: View {
     @AppStorage(DefaultsKey.panelUtilityCommandBar) private var showCommandBar = true
     @AppStorage(DefaultsKey.panelUtilityScreenRecorder) private var showScreenRecorder = true
     @AppStorage(DefaultsKey.panelUtilityPortManager) private var showPortManager = true
+    @AppStorage(DefaultsKey.panelUtilityOpenScribe) private var showOpenScribe = true
+    @ObservedObject private var openScribe = OpenScribeService.shared
     @ObservedObject private var recorder = ScreenRecorderService.shared
     @AppStorage(DefaultsKey.clipboardHistoryEnabled) private var clipboardEnabled = false
     @AppStorage(DefaultsKey.panelUtilityOrder) private var utilityOrderRaw = ""
@@ -769,6 +772,7 @@ struct UtilitiesSection: View {
         case .screenshot: return showScreenshot
         case .screenRecorder: return showScreenRecorder
         case .portManager: return showPortManager
+        case .openScribe: return showOpenScribe
         }
     }
 
@@ -1011,6 +1015,24 @@ struct UtilitiesSection: View {
                                 showsDragHandle: true,
                                 visibility: $showPortManager,
                                 action: { showPortManagerPanel = true })
+        case .openScribe:
+            UtilityActionButton(title: openScribe.phase == .idle
+                                    ? FeatureStrings.openScribe(l10n.language).title
+                                    : FeatureStrings.openScribe(l10n.language).stop,
+                                caption: FeatureStrings.openScribe(l10n.language).panelCaption,
+                                systemImage: openScribe.phase == .idle ? "waveform.and.mic" : "stop.circle",
+                                isEditing: editing,
+                                showsDragHandle: true,
+                                visibility: $showOpenScribe,
+                                shortcutHint: shortcutHint(.openScribe),
+                                action: {
+                                    appDelegate()?.closePopover()
+                                    // Focus returns to the app the text is for
+                                    // before the recording notes its target.
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                                        OpenScribeService.shared.toggle()
+                                    }
+                                })
         }
     }
 
@@ -1088,6 +1110,7 @@ struct UtilitiesSection: View {
         showQuickLauncher = true
         showCommandBar = true
         showPortManager = true
+        showOpenScribe = true
     }
 
     private func grantAccessibility() {

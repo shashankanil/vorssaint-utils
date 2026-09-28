@@ -312,6 +312,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate, NSW
         AudioInputDeviceManager.shared.stop()
         // Flushes any scratchpad edit still inside the save debounce.
         ScratchpadService.shared.suspend()
+        // A dictation still recording or uploading ends with the app, and its
+        // audio file goes with it.
+        if AppFeature.openScribe.isAvailable { OpenScribeService.shared.suspend() }
         // Every macOS shortcut a feature took over goes back now, whichever
         // feature held it; not all of them suspend here.
         SystemShortcutTakeover.restoreAll()

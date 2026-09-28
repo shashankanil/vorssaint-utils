@@ -6,10 +6,10 @@ You can review or change every grant in System Settings, under Privacy and Secur
 
 | Permission | Optional | Powers |
 |---|---|---|
-| Accessibility | Yes | Scroll direction, Window Layout, the app and window switcher, Dock Preview, Dock click to minimize, middle click, paste as plain text, Finder cut and paste, quit on close, radial menu key actions, optional notch notification mirroring and keyboard feedback |
+| Accessibility | Yes | Scroll direction, Window Layout, the app and window switcher, Dock Preview, Dock click to minimize, middle click, paste as plain text, Finder cut and paste, quit on close, radial menu key actions, OpenScribe pasting, optional notch notification mirroring and keyboard feedback |
 | Screen Recording | Yes | Window previews, screenshots, copy text from screen and screen recordings |
 | System Audio Recording | Yes | Volume mixer, optional live equalizer and system audio capture for recordings |
-| Microphone | Yes | Your voice in a screen recording, only when you turn it on |
+| Microphone | Yes | Your voice in a screen recording when you turn it on, and OpenScribe dictation while it listens |
 | Camera | Yes | The camera preview mirror, floating or inside the notch |
 | Calendars | Yes | Upcoming appointments in the notch |
 | Files and Folders | Yes | Monitoring downloads in a folder you choose |
@@ -33,6 +33,7 @@ You can review or change every grant in System Settings, under Privacy and Secur
 - **Dock click to minimize**, which spots clicks on the Dock icon of the active app and minimizes or restores its windows.
 - **Middle click**, which turns a three finger press on the trackpad into a middle click.
 - **Paste as plain text**, which presses ⌘V for you after stripping the formatting.
+- **OpenScribe**, which presses ⌘V for you to insert a finished dictation. Without it, the text is copied to the clipboard instead.
 - **Finder cut and paste**, which steps in on ⌘X and ⌘V while Finder is in front.
 - **Quit on close**, which spots when an app's last window goes away.
 - **Radial menu**, for wheel actions that press a key combo or a media key
@@ -67,11 +68,14 @@ You can review or change every grant in System Settings, under Privacy and Secur
 
 **Why it comes up.** macOS asks before an app can record your microphone.
 
-**What uses it.** The screen recorder, only when you turn on microphone audio. Your voice is kept on a separate track so you can adjust or remove it in the editor.
+**What uses it.**
 
-**If you say no.** Screen recording still works without your microphone. System audio remains a separate choice.
+- **Screen recorder**, only when you turn on microphone audio. Your voice is kept on a separate track so you can adjust or remove it in the editor.
+- **OpenScribe**, only between the shortcut press that starts a dictation and the one that ends it. The microphone is not open at any other time.
 
-**Optional.** Yes. Microphone audio stays in the recording on your Mac unless you explicitly create a temporary link for the finished video.
+**If you say no.** Screen recording still works without your microphone. System audio remains a separate choice. OpenScribe cannot dictate and says so when you try.
+
+**Optional.** Yes. Microphone audio in a recording stays on your Mac unless you explicitly create a temporary link for the finished video. Dictation audio goes only to the transcription endpoint you chose in OpenScribe; see the [privacy notes](PRIVACY.md#openscribe-dictation).
 
 ## Camera
 

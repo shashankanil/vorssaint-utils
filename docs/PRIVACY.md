@@ -19,7 +19,15 @@ Clipboard history, including the images and files you copy, lives in the app's l
 
 Recent Captures keeps up to 12 screenshots, within a 256 MB limit, in the app's private local cache so you can reopen them. Recordings are not duplicated: only their existing path and a small thumbnail are kept. Clear removes that history and its cached images. When a screenshot is copied as a file, its private local PNG is kept temporarily so other apps can finish reading it, then cleaned on later copies once it is older than 24 hours or earlier when the bounded cache fills. None of these local caches is uploaded automatically.
 
-When a feature needs a macOS permission such as Accessibility, Screen Recording or Microphone, that access is used only for the feature it belongs to. Captured content leaves the Mac only when you explicitly share it, from the Share menu or with a temporary link. The [permissions guide](PERMISSIONS.md) breaks down each permission.
+When a feature needs a macOS permission such as Accessibility, Screen Recording or Microphone, that access is used only for the feature it belongs to. Captured content leaves the Mac only when you explicitly share it, from the Share menu or with a temporary link, or when you dictate with OpenScribe, which sends that dictation to the endpoint you configured. The [permissions guide](PERMISSIONS.md) breaks down each permission.
+
+## OpenScribe dictation
+
+OpenScribe is not installed until you add it from the features hub, and it contacts nothing until you add an endpoint and dictate. Vorssaint operates no speech service of its own: each dictation is sent only to the transcription endpoint you chose, and its text to the cleanup endpoint if you turned one on. Those endpoints may be hosted services, such as OpenAI, Groq, Deepgram or AssemblyAI, whose own terms and privacy policies then apply, or a server you run yourself, including one on this Mac.
+
+The microphone is open only between the press that starts a dictation and the one that ends it. The audio is written to a temporary file on your Mac, read once for the upload and deleted right away, including when you cancel, when a request fails and when the app quits. The latest transcript is kept in memory so you can copy it again from Settings; it is never written to disk and is gone when the app quits. Pasting borrows the clipboard for a moment and then restores what was on it.
+
+API keys are stored in your login keychain, one item per endpoint, readable only on this Mac. They are never put in preferences, so settings backups carry your endpoint addresses, models and choices but no key. Removing an endpoint deletes its key, and uninstalling Vorssaint from its own settings deletes them all. An endpoint's test sends a quarter second of silence, or the word "hello" to a cleanup model, to confirm the address, model and key work. Plain http is allowed for local servers, and Settings warns when it would carry your audio unencrypted to another machine.
 
 ## Optional notch features
 

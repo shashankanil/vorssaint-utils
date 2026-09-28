@@ -333,6 +333,7 @@ final class FeatureRuntime: ObservableObject {
             else { AgentUsageService.shared.stop() }
         },
         .scratchpad: { ScratchpadService.shared.syncWithPreferences() },
+        .openScribe: { OpenScribeService.shared.syncWithPreferences() },
         .commandBar: { CommandBarService.shared.syncWithPreferences() },
         .cleaner: {
             CleanerScheduler.shared.syncWithPreferences()
